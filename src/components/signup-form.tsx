@@ -134,7 +134,9 @@ export function SignupForm({
                 Debe tener al menos 8 caracteres, 1 mayúscula y 1 número.
               </FieldDescription>
               <Field>
-                <Button type="submit">Crear cuenta</Button>
+                <Button disabled={register.isPending} type="submit">
+                  Crear cuenta
+                </Button>
               </Field>
               <FieldDescription className="text-center">
                 ¿Ya tienes una cuenta? <Link href="/login">Inicia sesión</Link>

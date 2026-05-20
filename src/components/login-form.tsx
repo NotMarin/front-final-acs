@@ -106,7 +106,9 @@ export function LoginForm({
                 )}
               />
               <Field>
-                <Button type="submit">Continuar</Button>
+                <Button disabled={login.isPending} type="submit">
+                  Continuar
+                </Button>
               </Field>
               <FieldDescription className="text-center">
                 ¿No tienes una cuenta? <Link href="signup">Regístrate</Link>
