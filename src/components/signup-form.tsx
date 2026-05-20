@@ -16,6 +16,7 @@ import Link from "next/link";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRegister } from "../hooks/use-auth";
 
 export const formSchema = z
   .object({
@@ -36,6 +37,8 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const register = useRegister();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,7 +49,10 @@ export function SignupForm({
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data);
+    register.mutate({
+      email: data.email,
+      password: data.password,
+    });
   }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -141,6 +147,8 @@ export function SignupForm({
               fill
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:grayscale"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="eager"
             />
           </div>
         </CardContent>

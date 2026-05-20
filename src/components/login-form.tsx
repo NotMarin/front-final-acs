@@ -16,6 +16,7 @@ import * as z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useLogin } from "../hooks/use-auth";
 
 const formSchema = z.object({
   email: z.string().email("Correo electrónico no válido."),
@@ -30,6 +31,8 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const login = useLogin();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,8 +42,7 @@ export function LoginForm({
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    console.log(data);
+    login.mutate({ email: data.email, password: data.password });
   }
 
   return (
@@ -117,6 +119,8 @@ export function LoginForm({
               alt="Login image"
               className="absolute inset-0 h-full w-full object-cover dark:grayscale"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              loading="eager"
             />
           </div>
         </CardContent>

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { cn } from "../lib/utils";
+import QueryProvider from "../components/providers/query-provider";
+import { AuthProvider } from "../components/providers/auth-provider";
+import { Toaster } from "sonner";
 
 const poppins = Poppins({
   variable: "--font-sans",
@@ -32,7 +35,12 @@ export default function RootLayout({
       )}
       suppressHydrationWarning
     >
-      <body className="min-h-dvh flex flex-col">{children}</body>
+      <body className="min-h-dvh flex flex-col">
+        <QueryProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryProvider>
+        <Toaster closeButton position="top-center" />
+      </body>
     </html>
   );
 }
